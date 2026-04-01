@@ -5,290 +5,65 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>법무법인 더 H 황해 — AI 기반 통합 의사결정 및 실행 시스템</title>
 <style>
-/* ===== 기본 리셋 및 타이포그래피 ===== */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 10pt; }
-body {
-  font-family: '맑은 고딕', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
-  color: #222;
-  line-height: 1.7;
-  background: #fff;
-  word-break: keep-all;
-  overflow-wrap: break-word;
-}
-
-/* ===== 인쇄 CSS ===== */
-@page {
-  size: 210mm 297mm;
-  margin: 20mm 25mm;
-}
+@page { size: A4; margin: 18mm 17mm; }
 @media print {
-  body { background: #fff; }
-  .page { box-shadow: none; margin: 0; padding: 0; width: auto; min-height: auto; }
   .page-break { page-break-before: always; }
-  .no-print { display: none; }
+  tr { break-inside: avoid; }
+  .card, .note-box, .diagram-box { break-inside: avoid; }
 }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Malgun Gothic', sans-serif; font-size: 10pt; line-height: 1.7; color: #111; background: #fff; word-break: keep-all; }
+.page { max-width: 210mm; margin: 0 auto; padding: 18mm 17mm; }
 
-/* ===== 화면용 페이지 스타일 ===== */
-@media screen {
-  body { background: #e8e8e8; padding: 20px 0; }
-  .page {
-    width: 210mm;
-    min-height: 297mm;
-    margin: 0 auto 30px auto;
-    padding: 20mm 25mm;
-    background: #fff;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
-  }
-}
+/* 커버 */
+.cover { background: #0B1D3A; color: #fff; min-height: 297mm; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 40px; }
+.cover h1 { font-size: 24pt; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.02em; }
+.cover .sub { font-size: 12pt; color: rgba(255,255,255,0.7); margin-bottom: 40px; }
+.cover .date { font-size: 10pt; color: rgba(255,255,255,0.5); }
+.cover .org { font-size: 10pt; color: rgba(255,255,255,0.6); margin-top: 8px; }
 
-/* ===== 색상 변수 ===== */
-:root {
-  --navy: #2C3E50;
-  --gold: #C9A84C;
-  --light-bg: #f0f0f0;
-  --border: #333;
-}
+/* 목차 */
+.toc { padding: 40px 0; }
+.toc h2 { font-size: 14pt; font-weight: 700; margin-bottom: 24px; border-bottom: 2px solid #111; padding-bottom: 8px; }
+.toc-item { display: flex; justify-content: space-between; padding: 6px 0; font-size: 10pt; border-bottom: 1px dotted #ccc; }
+.toc-item b { font-weight: 700; }
 
-/* ===== 커버 페이지 ===== */
-.cover {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  min-height: 257mm; /* 297 - 40 패딩 */
-}
-.cover-line {
-  width: 80px;
-  height: 3px;
-  background: var(--gold);
-  margin: 24px auto;
-}
-.cover-title {
-  font-size: 26pt;
-  font-weight: 800;
-  color: var(--navy);
-  letter-spacing: -0.5px;
-  margin-bottom: 8px;
-}
-.cover-subtitle {
-  font-size: 14pt;
-  font-weight: 600;
-  color: var(--navy);
-  margin-bottom: 6px;
-}
-.cover-org {
-  font-size: 12pt;
-  font-weight: 400;
-  margin-top: 32px;
-}
-.cover-date {
-  font-size: 11pt;
-  margin-top: 12px;
-}
-.cover-badge {
-  display: inline-block;
-  border: 2px solid var(--gold);
-  padding: 6px 24px;
-  font-size: 11pt;
-  font-weight: 700;
-  letter-spacing: 1px;
-  margin-top: 40px;
-}
+/* 섹션 */
+h2 { font-size: 14pt; font-weight: 700; margin: 32px 0 16px; padding-bottom: 6px; border-bottom: 2px solid #111; }
+h3 { font-size: 11pt; font-weight: 700; margin: 20px 0 10px; }
+h4 { font-size: 10pt; font-weight: 700; margin: 14px 0 8px; }
+p, li { font-size: 10pt; line-height: 1.7; margin-bottom: 6px; }
+ul, ol { padding-left: 18px; }
 
-/* ===== 장 제목 ===== */
-.chapter-num {
-  font-size: 11pt;
-  font-weight: 700;
-  color: var(--gold);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 4px;
-}
-.chapter-title {
-  font-size: 18pt;
-  font-weight: 800;
-  color: var(--navy);
-  border-bottom: 3px solid var(--gold);
-  padding-bottom: 8px;
-  margin-bottom: 20px;
-}
+/* 표 */
+table { width: 100%; border-collapse: collapse; margin: 12px 0 16px; font-size: 9.5pt; }
+th { background: #f0f0f0; font-weight: 700; color: #111; padding: 8px 10px; border: 1px solid #ddd; text-align: left; }
+td { padding: 8px 10px; border: 1px solid #ddd; background: #fff; vertical-align: top; }
+tr:hover td { background: #fafafa; }
 
-/* ===== 섹션 제목 ===== */
-h3 {
-  font-size: 12pt;
-  font-weight: 700;
-  color: var(--navy);
-  margin: 18px 0 8px 0;
-  padding-left: 10px;
-  border-left: 4px solid var(--gold);
-}
-h4 {
-  font-size: 10.5pt;
-  font-weight: 700;
-  margin: 14px 0 6px 0;
-}
+/* 다이어그램 */
+.diagram-box { border: 1px solid #ddd; padding: 20px; margin: 16px 0; background: #fafafa; }
+.diagram-title { font-size: 10pt; font-weight: 700; text-align: center; margin-bottom: 16px; }
+.flow-row { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 8px 0; flex-wrap: wrap; }
+.flow-box { background: #fff; border: 1px solid #ddd; padding: 10px 16px; font-size: 9pt; text-align: center; min-width: 100px; }
+.flow-box-highlight { background: #0B1D3A; color: #fff; border: 1px solid #0B1D3A; padding: 10px 16px; font-size: 9pt; text-align: center; min-width: 100px; }
+.flow-arrow { font-size: 16px; color: #999; }
+.flow-sub { font-size: 8pt; color: #888; margin-top: 4px; }
 
-/* ===== 본문 ===== */
-p { margin-bottom: 8px; }
-ul, ol { margin: 6px 0 12px 20px; }
-li { margin-bottom: 4px; }
-strong { font-weight: 700; }
+/* 개조식 */
+.bullet { padding-left: 12px; position: relative; }
+.bullet::before { content: '-'; position: absolute; left: 0; }
 
-/* ===== 표 ===== */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 12px 0 18px 0;
-  table-layout: fixed;
-  font-size: 9.5pt;
-}
-th, td {
-  border: 1px solid var(--border);
-  padding: 7px 10px;
-  text-align: left;
-  vertical-align: top;
-  word-break: keep-all;
-}
-th {
-  background: var(--light-bg);
-  font-weight: 700;
-}
-caption {
-  text-align: left;
-  font-weight: 700;
-  font-size: 10pt;
-  margin-bottom: 4px;
-}
+/* 카드/박스 */
+.card { border: 1px solid #ddd; padding: 16px; margin: 8px 0; background: #fff; }
+.note-box { background: #f9f9f9; border-left: 3px solid #0B1D3A; padding: 12px 16px; margin: 12px 0; font-size: 9.5pt; }
 
-/* ===== 다이어그램 공통 ===== */
-.diagram {
-  margin: 16px 0 20px 0;
-  padding: 16px;
-  border: 1px solid #ccc;
-  background: #fafafa;
-  overflow: visible;
-}
-.diagram-title {
-  font-size: 10.5pt;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 14px;
-  color: var(--navy);
-}
-.dia-row {
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  gap: 10px;
-  margin-bottom: 8px;
-  flex-wrap: wrap;
-}
-.dia-box {
-  border: 2px solid var(--navy);
-  padding: 8px 12px;
-  text-align: center;
-  font-size: 9pt;
-  font-weight: 600;
-  background: #fff;
-  min-width: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  word-break: keep-all;
-}
-.dia-box.gold {
-  border-color: var(--gold);
-  background: #fdf8ec;
-}
-.dia-box.navy-bg {
-  background: var(--navy);
-  color: #fff;
-}
-.dia-box.gold-bg {
-  background: var(--gold);
-  color: #fff;
-}
-.dia-arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14pt;
-  font-weight: 700;
-  color: var(--navy);
-  min-width: 30px;
-}
-.dia-arrow-down {
-  text-align: center;
-  font-size: 14pt;
-  font-weight: 700;
-  color: var(--navy);
-  margin: 4px 0;
-}
-.dia-group {
-  border: 1px dashed var(--gold);
-  padding: 10px;
-  margin: 6px 0;
-}
-.dia-group-label {
-  font-size: 8.5pt;
-  font-weight: 700;
-  color: var(--gold);
-  margin-bottom: 6px;
-  text-align: center;
-}
+/* 그리드 */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
 
-/* ===== 강조 박스 ===== */
-.highlight-box {
-  border: 2px solid var(--gold);
-  padding: 12px 16px;
-  margin: 12px 0;
-  background: #fdf8ec;
-}
-.highlight-box ul { margin-left: 16px; }
-
-/* ===== 구분선 ===== */
-.divider {
-  height: 1px;
-  background: #ddd;
-  margin: 16px 0;
-}
-
-/* ===== 페이지 브레이크 ===== */
-.page-break {
-  page-break-before: always;
-}
-
-/* ===== 시나리오 플로우 ===== */
-.flow-step {
-  display: inline-block;
-  border: 2px solid var(--navy);
-  padding: 6px 14px;
-  font-size: 9pt;
-  font-weight: 600;
-  background: #fff;
-  vertical-align: middle;
-  word-break: keep-all;
-}
-.flow-arrow {
-  display: inline-block;
-  font-size: 12pt;
-  font-weight: 700;
-  color: var(--navy);
-  vertical-align: middle;
-  margin: 0 4px;
-}
-
-/* ===== 푸터 ===== */
-.page-footer {
-  margin-top: 30px;
-  padding-top: 8px;
-  border-top: 1px solid #ddd;
-  font-size: 8pt;
-  text-align: center;
-  color: #999;
-}
+/* 포인트 */
+.accent { font-weight: 700; }
 </style>
 </head>
 <body>
