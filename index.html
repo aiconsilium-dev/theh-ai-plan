@@ -7,16 +7,26 @@
 <style>
 @page { size: A4; margin: 18mm 17mm; }
 @media print {
-  .page-break { page-break-before: always; }
+  .cover { height: auto; min-height: 0; page-break-after: always; }
+  .toc { page-break-after: always; }
+  section, .section { page-break-before: always; page-break-inside: auto; }
+  table { page-break-inside: auto; }
+  thead { display: table-header-group; }
+  tr { page-break-inside: avoid; page-break-after: auto; }
+  .diagram-box, .card, .note-box { page-break-inside: avoid; }
+  h2, h3, h4 { page-break-after: avoid; }
+  p { orphans: 3; widows: 3; }
+
+  .page-break { page-break-before: always; page-break-after: auto; page-break-inside: avoid; }
   tr { break-inside: avoid; }
   .card, .note-box, .diagram-box { break-inside: avoid; }
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Malgun Gothic', sans-serif; font-size: 10pt; line-height: 1.7; color: #111; background: #fff; word-break: keep-all; }
-.page { max-width: 210mm; margin: 0 auto; padding: 18mm 17mm; }
+.page { max-width: 210mm; margin: 0 auto; padding: 15mm 17mm; }
 
 /* 커버 */
-.cover { background: #0B1D3A; color: #fff; min-height: 297mm; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 40px; }
+.cover { background: #0B1D3A; color: #fff; height: 100vh; max-height: 297mm; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 40px; }
 .cover h1 { font-size: 24pt; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.02em; }
 .cover .sub { font-size: 12pt; color: rgba(255,255,255,0.7); margin-bottom: 40px; }
 .cover .date { font-size: 10pt; color: rgba(255,255,255,0.5); }
